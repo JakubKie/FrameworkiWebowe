@@ -1,0 +1,14 @@
+from app.app import *
+import pytest
+
+@pytest.fixture
+def client():
+    return app.test_client()
+
+def test_get_users(client):
+    response = client.get("/users")
+    assert response.status_code == 200
+
+def test_get_users_by_id(client):
+    response = client.get("/users/1")
+    assert response.status_code == 200
