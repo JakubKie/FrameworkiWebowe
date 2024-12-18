@@ -12,3 +12,7 @@ def test_get_users(client):
 def test_get_users_by_id(client):
     response = client.get("/users/1")
     assert response.status_code == 200
+
+def test_create_user(client):
+    response = client.post("/users", json={"name": "Marcin", "lastname": "Dublej"})
+    assert response.status_code == 201

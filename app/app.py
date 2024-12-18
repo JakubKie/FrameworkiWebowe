@@ -16,7 +16,16 @@ def get_user_by_id(id):
             break
     return wanted_user
 
-# @app.post('/users')
-# def create_user():
-#     data = request.get_json()
-#
+@app.post('/users')
+def create_user():
+    data = request.get_json()
+    id = 0
+    for user in users:
+        id+=1
+        if user['id'] != id:
+            users.insert(id-1, {"id": id, "name": data['name'], "lastname": data['lastname']})
+            break
+    else:
+        id+=1
+        users.append({"id": id, "name": data['name'], "lastname": data['lastname']})
+    return users, 201
