@@ -9,12 +9,12 @@ def get_users():
 
 @app.get('/users/<id>')
 def get_user_by_id(id):
-    wanted_user = 0
     for user in users:
-        if user['id'] == int(id):
+        if user['id'] == id:
             wanted_user = user
-            break
-    return wanted_user
+            return wanted_user
+    else:
+        return 404
 
 @app.post('/users')
 def create_user():
@@ -34,7 +34,7 @@ def create_user():
 def update_user(id):
     data = request.get_json()
     for user in users:
-        if user['id'] == int(id):
+        if str(user['id']) == str(id):
             user.update(data)
             break
     return users, 204
@@ -43,17 +43,20 @@ def update_user(id):
 def update_or_add_user(id):
     data = request.get_json()
     for user in users:
-        if str(user['id']) == id:
+        if str(user['id']) == str(id):
             user.update(data)
-            break
-    else:
-        users.append({"id": len(users)+1, "name": data['name'], "lastname": data['lastname']})
-    return users, 204
+            return users, 204
+    a = 0
+    for user in users:
+        a+=1
+        if user['id'] != a:
+            users.append({"id": a, "name": data['name'], "lastname": data['lastname']})
+            return users, 204
 
 @app.delete('/users/<id>')
 def delete_user(id):
     for user in users:
-        if str(user['id']) == id:
+        if str(user['id']) == str(id):
             users.remove(user)
             return users, 204
     else:
