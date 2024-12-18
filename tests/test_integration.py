@@ -16,3 +16,7 @@ def test_get_users_by_id(client):
 def test_create_user(client):
     response = client.post("/users", json={"name": "Marcin", "lastname": "Dublej"})
     assert response.status_code == 201
+
+def test_update_user(client):
+    response = client.patch("/users/1", json={"name": "Michał"})
+    assert response.status_code == 204

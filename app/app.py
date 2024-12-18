@@ -29,3 +29,12 @@ def create_user():
         id+=1
         users.append({"id": id, "name": data['name'], "lastname": data['lastname']})
     return users, 201
+
+@app.patch('/users/<id>')
+def update_user(id):
+    data = request.get_json()
+    for user in users:
+        if user['id'] == int(id):
+            user.update(data)
+            break
+    return users, 204
