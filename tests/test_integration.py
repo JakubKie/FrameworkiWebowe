@@ -28,3 +28,11 @@ def test_update_or_add_user_updating(client):
 def test_update_or_add_user_adding(client):
     response = client.put("/users/a", json={"name": "Michał", "lastname": "Anioł"})
     assert response.status_code == 204
+
+def test_remove_user(client):
+    response = client.delete("/users/1")
+    assert response.status_code == 204
+
+def test_remove_user_not_existing(client):
+    response = client.delete("/users/5")
+    assert response.status_code == 400

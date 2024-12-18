@@ -49,3 +49,12 @@ def update_or_add_user(id):
     else:
         users.append({"id": len(users)+1, "name": data['name'], "lastname": data['lastname']})
     return users, 204
+
+@app.delete('/users/<id>')
+def delete_user(id):
+    for user in users:
+        if str(user['id']) == id:
+            users.remove(user)
+            return users, 204
+    else:
+        return users, 400

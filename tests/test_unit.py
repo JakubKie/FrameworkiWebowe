@@ -27,3 +27,11 @@ def test_update_or_add_user_updating(client):
 def test_update_or_add_user_adding(client):
     client.put("/users/a", json={"name": "Michał", "lastname": "Anioł"})
     assert get_user_by_id(2) == {"id": 2, "name": "Michał", "lastname": "Anioł"}
+
+def test_remove_user(client):
+    client.delete("/users/1")
+    assert get_users() == []
+
+def test_remove_user_not_existing(client):
+    client.delete("/users/5")
+    assert get_users() == [{"id": 1, "name": "Wojciech", "lastname": "Oczkowski"}]
