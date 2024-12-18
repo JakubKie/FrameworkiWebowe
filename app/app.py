@@ -5,14 +5,14 @@ app = Flask(__name__)
 
 @app.get('/users')
 def get_users():
-    return users
+    return users, 200
 
 @app.get('/users/<id>')
 def get_user_by_id(id):
     for user in users:
-        if user['id'] == id:
+        if str(user['id']) == str(id):
             wanted_user = user
-            return wanted_user
+            return wanted_user, 200
     else:
         return 404
 
