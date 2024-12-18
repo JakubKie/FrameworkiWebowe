@@ -38,3 +38,14 @@ def update_user(id):
             user.update(data)
             break
     return users, 204
+
+@app.put('/users/<id>')
+def update_or_add_user(id):
+    data = request.get_json()
+    for user in users:
+        if str(user['id']) == id:
+            user.update(data)
+            break
+    else:
+        users.append({"id": len(users)+1, "name": data['name'], "lastname": data['lastname']})
+    return users, 204

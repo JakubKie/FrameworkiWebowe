@@ -20,3 +20,11 @@ def test_create_user(client):
 def test_update_user(client):
     response = client.patch("/users/1", json={"name": "Michał"})
     assert response.status_code == 204
+
+def test_update_or_add_user_updating(client):
+    response = client.put("/users/1", json={"name": "Michał"})
+    assert response.status_code == 204
+
+def test_update_or_add_user_adding(client):
+    response = client.put("/users/a", json={"name": "Michał", "lastname": "Anioł"})
+    assert response.status_code == 204

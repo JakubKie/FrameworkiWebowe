@@ -19,3 +19,11 @@ def test_create_user(client):
 def test_update_user(client):
     client.patch("/users/1", json={"name": "Michał"})
     assert get_user_by_id(1) == {"id": 1, "name": "Michał", "lastname": "Oczkowski"}
+
+def test_update_or_add_user_updating(client):
+    client.put("/users/1", json={"name": "Michał"})
+    assert get_user_by_id(1) == {"id": 1, "name": "Michał", "lastname": "Oczkowski"}
+
+def test_update_or_add_user_adding(client):
+    client.put("/users/a", json={"name": "Michał", "lastname": "Anioł"})
+    assert get_user_by_id(2) == {"id": 2, "name": "Michał", "lastname": "Anioł"}
